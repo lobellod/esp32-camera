@@ -1176,13 +1176,14 @@ esp_err_t camera_init(const camera_config_t* config)
         }
         int qp = config->jpeg_quality;
         int compression_ratio_bound = 1;
-        if (qp > 10) {
+		//force compression ratio to 1 to remove buffer overflow in high detail images
+        /*if (qp > 10) {
             compression_ratio_bound = 16;
         } else if (qp > 5) {
             compression_ratio_bound = 10;
         } else {
             compression_ratio_bound = 4;
-        }
+        }*/
         (*s_state->sensor.set_quality)(&s_state->sensor, qp);
         s_state->in_bytes_per_pixel = 2;
         s_state->fb_bytes_per_pixel = 2;
